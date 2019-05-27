@@ -29,5 +29,5 @@ spec:
         readinessProbe:
           httpGet:
             path: /healthcheck
-            port: probe
+            port: 8081
           periodSeconds: 5
