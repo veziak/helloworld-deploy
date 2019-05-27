@@ -5,7 +5,7 @@ metadata:
   labels:
     app: helloworld-go
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: helloworld-go
@@ -26,6 +26,12 @@ spec:
         env:
         - name: VERSION
           value: ${APP_VERSION}
+        - name: POSTGRES_DB_HOST
+          value: ${POSTGRES_DB_HOST}
+        - name: POSTGRES_DB_USER
+          value: ${POSTGRES_DB_USER}
+        - name: POSTGRES_DB_PASSWORD
+          value: ${POSTGRES_DB_PASSWORD}
         readinessProbe:
           httpGet:
             path: /healthcheck
