@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: helloworld-go-${APP_VERSION}
+  labels:
+    app: helloworld-go
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: helloworld-go
+      version: ${APP_VERSION}
+  template:
+    metadata:
+      labels:
+        app: helloworld-go
+        version: ${APP_VERSION}
+    spec:
+      containers:
+      - name: helloworld-go
+        image: eu.gcr.io/plated-dryad-241619/helloworld-go:${APP_VERSION}
+        imagePullPolicy: Always
+        ports:
+        - name: http-server
+          containerPort: 8081
+        env:
+        - name: VERSION
+          value: ${APP_VERSION}
+        readinessProbe:
+          httpGet:
+            path: /healthcheck
+            port: probe
+          periodSeconds: 5
