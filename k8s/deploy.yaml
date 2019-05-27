@@ -29,9 +29,15 @@ spec:
         - name: POSTGRES_DB_HOST
           value: ${POSTGRES_DB_HOST}
         - name: POSTGRES_DB_USER
-          value: ${POSTGRES_DB_USER}
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: username
         - name: POSTGRES_DB_PASSWORD
-          value: ${POSTGRES_DB_PASSWORD}
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+	      key: password
         readinessProbe:
           httpGet:
             path: /healthcheck
